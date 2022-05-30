@@ -1,6 +1,8 @@
+import {useSelector, useDispatch} from "react-redux";
+import {setBg} from "../../redux/weather/weatherSlice";
 import {useGetWeatherQuery} from "../../redux/weather/weatherQuery";
-import {useSelector} from "react-redux";
 import styled from "styled-components";
+import {useEffect} from "react";
 
 const WeatherContainer = styled.div`
   height: 700px;
@@ -18,7 +20,7 @@ const Top = styled.div`
   max-width: 700px;
 `;
 const Description = styled.div`
-  color: #363636;
+  color: #e0e0e0;
   mix-blend-mode: luminosity;
 `;
 const Bottom = styled.div`
@@ -46,12 +48,26 @@ const UtilText = styled.p`
 const CountryFlag = styled.img`
   width: 64px;
   border-radius: 2px;
-  margin-right: 1rem;
+`;
+
+const Span = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  i {
+    font-size: 2rem;
+  }
 `;
 
 const Weather = () => {
+    const dispatch = useDispatch();
     const city = useSelector(state => state.weather.city);
     const {data, loading, error} = useGetWeatherQuery(city);
+
+    useEffect(() => {
+        dispatch(setBg(data?.weather[0].description));
+    }, [data])
 
     if (loading) return <UtilText>Loading...</UtilText>;
     if (error) return <UtilText>Error :(</UtilText>;
@@ -59,11 +75,14 @@ const Weather = () => {
         <WeatherContainer>
             <Top>
                 <div className="location">
-                    <span style={{display: "flex", alignItems: "center"}}>
-                        <CountryFlag src={`https://countryflagsapi.com/png/${data?.sys.country}`}
+                    <Span>
+                        <CountryFlag src={`https://countryflagsapi.com/png/${data?.sys.country || data?.name}`}
                                      alt="Country Flag"/>
                         <p>{data?.name}</p>
-                    </span>
+
+                        <img src={`https://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`} alt="Icon"/>
+
+                    </Span>
                 </div>
                 <div className="temp bold">
                     <h1>{data?.main.temp.toFixed()}°C</h1>

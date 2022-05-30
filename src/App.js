@@ -2,6 +2,7 @@ import "./assets/style/style.css";
 import styled from "styled-components";
 import Search from "./components/Search/Search";
 import Weather from "./components/Weather/Weather";
+import {useSelector} from "react-redux";
 
 const AppStyle = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const AppStyle = styled.div`
 
   &&:before {
     content: '';
-    background: url('https://raw.githubusercontent.com/fireclint/weather-app-react/main/src/assets/sunset.jpg') no-repeat center center/cover;
+    background: url(${props => props.bg}) no-repeat center center/cover;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -22,8 +23,9 @@ const AppStyle = styled.div`
 `;
 
 const App = () => {
+    const bg = useSelector(state => state.weather.bg);
     return (
-        <AppStyle>
+        <AppStyle bg={bg}>
             <Search/>
             <Weather/>
         </AppStyle>
