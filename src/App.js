@@ -6,7 +6,15 @@ import {useSelector} from "react-redux";
 
 const AppStyle = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
+`;
+
+const Wrapper = styled.section`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0; /*If width: 100%, you don't need it*/
+  right: 0; /*If width: 100%, you don't need it*/
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
 
@@ -25,9 +33,11 @@ const AppStyle = styled.div`
 const App = () => {
     const bg = useSelector(state => state.weather.bg);
     return (
-        <AppStyle bg={bg}>
-            <Search/>
-            <Weather/>
+        <AppStyle>
+            <Wrapper bg={bg}>
+                <Search/>
+                <Weather/>
+            </Wrapper>
         </AppStyle>
     );
 }

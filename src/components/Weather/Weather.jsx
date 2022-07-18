@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {useEffect} from "react";
 
 const WeatherContainer = styled.div`
-  height: 700px;
+  height: 80vh;
   margin: auto;
   padding: 0 1rem;
   position: relative;
