@@ -3,6 +3,10 @@ import {setCity} from "../../redux/weather/weatherSlice";
 import styled from "styled-components";
 
 const SearchContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   padding: 1rem;
 `;
